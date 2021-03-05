@@ -1,0 +1,14 @@
+<odoo>
+<record id="view_invoice_name" model="ir.ui.view">
+    <field name="name">view.invoice.name</field>
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice_form"/>
+    <field name="arch" type="xml">
+                <xpath expr="//field[@name='reference']" position="after">
+					<!--field name='name' insivible="0"/-->
+                    <field name="get_name" invisible="1"/>
+                    <field name="get_name_serie" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+</odoo>
