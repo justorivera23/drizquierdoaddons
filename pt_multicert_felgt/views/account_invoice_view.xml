@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+        <record model="ir.ui.view" id="pt_multicert_felgt_account_invoice_form_view_inherit">
+                <field name="name">pt.multicert.felgt.account.invoice.form.inherit</field>
+                <field name="model">account.invoice</field>
+                <field name="inherit_id" ref="account.invoice_form" />
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                        <xpath expr="//button[@name='action_invoice_open']" position="after">
+                                <button name="action_debit_note" type="object" string="Nota de débito" groups="account.group_account_invoice" attrs="{'invisible': ['|',('type', '=', 'out_refund'), ('state', 'not in', ('open','in_payment','paid'))]}"/>
+                        </xpath>
+                        <field name="date_due" position="after">
+                                <field name="invoice_text_detail"/>
+                                <field name="dte_number" readonly="1" attrs="{'invisible': [('dte_number', '=', False)]}" />
+                                <field name="fel_link" attrs="{'invisible': [('uuid', '=', False)]}" widget="link_button" />
+                        </field>
+                        <field name="fiscal_position_id" position="after">
+                                <field name="old_tax_regime" attrs="{'invisible': [('type', '!=', 'out_refund')]}" />
+                                <field name="credit_note"  attrs="{'invisible': [('type', '!=', 'out_refund')]}"/>
+                                <field name="fel_gt_invoice_type" attrs="{'readonly': [('source_debit_note_id', '!=', False)]}" />
+                                <field name="fel_gt_withhold_amount" readonly="1" />
+                                <field name="uuid" readonly="1" />
+                                <field name="serie" readonly="1" />
+                                <field name="dte_number" readonly="1" />
+                                <field name="dte_date" readonly="1" />
+                                <field name="source_debit_note_id" readonly="1"/>
+                                <field name="debit_note_id" readonly="1" />
+                                <field name="total_in_letters" readonly="1" />
+                        </field>
+                </field>
+        </record>
+
+</odoo>

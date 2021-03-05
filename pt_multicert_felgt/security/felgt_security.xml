@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="module_pt_multicert_felgt_category" model="ir.module.category">
+        <field name="name">Facturación electrónica</field>
+    </record>
+</odoo>
