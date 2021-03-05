@@ -1,0 +1,7 @@
+flexipharmacy/controllers/__pycache__/*
+flexipharmacy/controllers/__pycache__/*.pyc
+flexipharmacy/models/__pycache__/*.*
+flexipharmacy/controllers/__pycache__/*
+flexipharmacy/models/__pycache__/product_brand.cpython-36.pyc
+flexipharmacy/wizard/__pycache__/*
+flexipharmacy/report/__pycache__/*

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+
+    <t t-extend="XmlReceipt">
+        <t t-jquery="t[t-if='receipt.cashier']" t-operation="replace">
+            <t t-if="order.invoice_number and widget.pos.config.receipt_invoice_number and order.uuid">
+                <div style="text-align:center">-----------------------------------------</div>
+                Número Autorización:
+                <br />
+                <t t-esc="order.uuid" />
+                <br />
+                Serie:
+                <t t-esc="order.serie" />
+                <br />
+                Número DTE:
+                <t t-esc="order.dte_number" />
+                <br />
+                Fecha Emisión:
+                <t t-esc="order.date_invoice" />
+                <br />
+                Fecha Autorización:
+                <t t-esc="order.dte_date" />
+                <br />
+                <div style="text-align:center">-----------------------------------------</div>
+            </t>
+            <t t-set="client" t-value="order.get_client()" />
+            <t t-if="client and widget.pos.config.receipt_customer_vat">
+                <t t-set="client" t-value="order.get_client()" />
+                Cliente:
+                <t t-esc="client['name']" />
+                <br />
+                <t t-if="client['street']">
+                    Dirección:
+                    <t t-esc="client['street']" />
+                    <br />
+                </t>
+                <t t-if="client['vat']">
+                    Nit:
+                    <t t-esc="client['vat']" />
+                    <br />
+                </t>
+                <t t-if="client['email']">
+                    Email:
+                    <t t-esc="client['email']" />
+                    <br />
+                </t>
+                <t t-if="client['phone'] or client['mobile']">
+                    Teléfono:
+                    <t t-esc="client['phone'] || client['mobile']" />
+                    <br />
+                </t>
+
+            </t>
+            <t t-if='receipt.cashier'>
+                <div class='cashier' styel="font-size: 8px;">
+                    <div>--------------------------------</div>
+                    <div>Cajero: <t t-esc='receipt.cashier' /></div>
+                    <div>Vendedor: <t t-esc='order.get_pos_salesperson_name()' /></div>
+                </div>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="PosTicket">
+
+        <t t-jquery="t[t-if*='receipt.header']" t-operation="before">
+
+            <t t-if="order.invoice_number and widget.pos.config.receipt_invoice_number and order.uuid">
+
+                <div style="text-align:center">-----------------------------------------</div>
+                Número Autorización:
+                <br />
+                <t t-esc="order.uuid" />
+                <br />
+                Serie:
+                <t t-esc="order.serie" />
+                <br />
+                Número DTE:
+                <t t-esc="order.dte_number" />
+                <br />
+                Fecha Emisión:
+                <t t-esc="order.date_invoice" />
+                <br />
+                Fecha Autorización:
+                <t t-esc="order.dte_date" />
+                <br />
+                <div style="text-align:center">-----------------------------------------</div>
+            </t>
+            <t t-set="client" t-value="order.get_client()" />
+            <t t-if="client and widget.pos.config.receipt_customer_vat">
+                <t t-set="client" t-value="order.get_client()" />
+                Cliente:
+                <t t-esc="client['name']" />
+                <br />
+                <t t-if="client['street']">
+                    Dirección:
+                    <t t-esc="client['street']" />
+                    <br />
+                </t>
+                <t t-if="client['vat']">
+                    Nit:
+                    <t t-esc="client['vat']" />
+                    <br />
+                </t>
+                <t t-if="client['email']">
+                    Email:
+                    <t t-esc="client['email']" />
+                    <br />
+                </t>
+                <t t-if="client['phone'] or client['mobile']">
+                    Teléfono:
+                    <t t-esc="client['phone'] || client['mobile']" />
+                    <br />
+                </t>
+
+            </t>
+        </t>
+    </t>
+
+
+
+    <t t-extend="ClientDetails">
+        <t t-jquery="div[class*='client-details-left']" t-operation="append">
+            <div class="client-detail">
+                <span class="label">TIN</span>
+                <t t-if="partner.vat">
+                    <span class="detail">
+                        <t t-esc="partner.vat" />
+                    </span>
+                </t>
+            </div>
+        </t>
+    </t>
+
+</templates>
