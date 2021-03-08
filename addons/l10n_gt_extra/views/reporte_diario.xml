@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="reporte_diario">
+        <t t-call="web.html_container">
+            <t t-set="data_report_page_offset" t-value="data['folio_inicial']-1"/>
+            <style>
+                .td_data td {
+                    padding-top: 1px !important;
+                    padding-bottom: 1px !important;
+                }
+            </style>
+
+            <div class="header" style="padding-top:10px;">
+                <div class="text-center">
+                    <h3>
+                        <span t-esc="res_company.name"/>
+                    </h3>
+                    <div>
+                        <strong>
+                            Libro Diario
+                        </strong>
+                    </div>
+                    <div>
+                        (Cifras expresadas en Quetzales)
+                    </div>
+                </div>
+                <div class="row mt-20" style="font-size: 10px !important;">
+                    <div class="col-8"></div>
+                    <div class="col-2">
+                        <strong>Folio No.</strong>
+                    </div>
+                    <div class="col-2">
+                        <strong>
+                            <span class="page"/>
+                        </strong>
+                    </div>
+                </div>
+                <div class="row mt-10" style="font-size: 10px !important;">
+                    <div class="col-3 text-right">
+                        Fecha de contabilización
+                    </div>
+                    <div class="col-1">
+                        Desde:
+                    </div>
+                    <div class="col-2">
+                        <span t-esc="data['fecha_desde']" t-esc-options='{"widget": "date"}'/>
+                    </div>
+                    <div class="col-3 text-right">
+                        Hasta:
+                    </div>
+                    <div class="col-2">
+                        <span t-esc="data['fecha_hasta']" t-esc-options='{"widget": "date"}'/>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                </div>
+            </div>
+            <t t-call="web.external_layout">
+
+                <div class="page" style="font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif">
+                    <t t-set="result" t-value="lineas(data)"/>
+
+                    <table class="table table-borderless" style="font-size: 9px !important;">
+                        <t t-if="data['agrupado_por_dia'] == true">
+                            <thead style="border: 2px solid #000">
+                                <tr style="border: 2px solid #000">
+                                    <th>Fecha</th>
+                                    <th>Codigo</th>
+                                    <th>Cuenta</th>
+                                    <th class="text-right">Debe</th>
+                                    <th class="text-right">Haber</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="result['lineas']" t-as="l">
+                                    <tr class="td_data">
+                                        <td>
+                                            <span t-esc="l['fecha']" t-esc-options='{"widget": "date"}'/>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                    <t t-foreach="l['cuentas']" t-as="ld">
+                                        <tr class="td_data">
+                                        <!--<tr style="page-break-inside: avoid;">-->
+                                            <td></td>
+                                            <td>
+                                                <span t-esc="ld['codigo']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="ld['cuenta']"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="ld['debe']"
+                                                      t-esc-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="ld['haber']"
+                                                      t-esc-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <b>Totales</b>
+                                    </td>
+                                    <td class="text-right">
+                                        <b>
+                                            <span t-esc="l['total_debe']"
+                                                  t-esc-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id, 'precision': 2}"/>
+                                        </b>
+                                    </td>
+                                    <td class="text-right">
+                                        <b>
+                                            <span t-esc="l['total_haber']"
+                                                  t-esc-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id, 'precision': 2}"/>
+                                        </b>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </t>
+                        <t t-else="">
+                            <thead>
+                                <tr style="border: 1px solid #000">
+                                    <th style="padding-top: 1px !important; padding-bottom: 1px !important;">No. de transacción</th>
+                                    <th style="border-left: 1px solid #000; padding-top: 1px !important; padding-bottom: 1px !important;">Fecha</th>
+                                    <th style="border-left: 1px solid #000; padding-top: 1px !important; padding-bottom: 1px !important;">Número Doc</th>
+                                    <th style="border-left: 1px solid #000; padding-top: 1px !important; padding-bottom: 1px !important;">Codigo</th>
+                                    <th style="border-left: 1px solid #000; padding-top: 1px !important; padding-bottom: 1px !important;">Cuenta</th>
+                                    <th style="border-left: 1px solid #000; padding-top: 1px !important; padding-bottom: 1px !important;" class="text-right">Debe</th>
+                                    <th style="border-left: 1px solid #000; padding-top: 1px !important; padding-bottom: 1px !important;" class="text-right">Haber</th>
+                                    <th style="border-left: 1px solid #000; padding-top: 1px !important; padding-bottom: 1px !important;">Comentario</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="result['lineas']" t-as="l" class="td_data" >
+                                <!--<tr t-foreach="result['lineas']" t-as="l" style="page-break-inside: avoid;">-->
+                                    <td class="td_data" style="max-height:5px; padding-top: 1px !important; padding-bottom: 1px !important;">
+                                        <span t-esc="l['numero_movimiento']"/>
+                                    </td>
+                                    <td style="max-height:5px; padding-top: 1px !important; padding-bottom: 1px !important;">
+                                        <span t-esc="l['fecha_movimiento']" t-esc-options='{"widget": "date"}'/>
+                                    </td>
+                                    <td style="max-height:5px; padding-top: 1px !important; padding-bottom: 1px !important;">
+                                        <span t-esc="l['numero_documento']"/>
+                                    </td>
+                                    <td style="max-height:5px; padding-top: 1px !important; padding-bottom: 1px !important;">
+                                        <span t-esc="l['codigo']"/>
+                                    </td>
+                                    <td style="max-height:5px; padding-top: 1px !important; padding-bottom: 1px !important;">
+                                        <span t-esc="l['cuenta']"/>
+                                    </td>
+                                    <td class="text-right" style="max-height:5px; padding-top: 1px !important; padding-bottom: 1px !important;">
+                                        <span t-esc="l['debe']"
+                                              t-esc-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                    </td>
+                                    <td class="text-right" style="max-height:5px; padding-top: 1px !important; padding-bottom: 1px !important;">
+                                        <span t-esc="l['haber']"
+                                              t-esc-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                    </td>
+                                    <td style="max-height:5px; padding-top: 1px !important; padding-bottom: 1px !important;">
+                                        <span t-esc="l['comentario_documento']"/>
+                                    </td>
+                                </tr>
+                                <tr class="td_data">
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <b>Totales</b>
+                                    </td>
+                                    <td class="text-right">
+                                        <b>
+                                            <span t-esc="result['totales']['debe']"
+                                                  t-esc-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id, 'precision': 2}"/>
+                                        </b>
+                                    </td>
+                                    <td class="text-right">
+                                        <b>
+                                            <span t-esc="result['totales']['haber']"
+                                                  t-esc-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id, 'precision': 2}"/>
+                                        </b>
+                                    </td>
+                                    <td class="text-right">
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </t>
+                    </table>
+                </div>
+                <div class="footer"></div>
+            </t>
+        </t>
+    </template>
+</odoo>
