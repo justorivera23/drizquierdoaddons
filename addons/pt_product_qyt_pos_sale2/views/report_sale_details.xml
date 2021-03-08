@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <template id="prod_qty_sale_details" inherit_id="point_of_sale.report_saledetails">
+      <xpath expr="//thead" position="replace">
+        <thead><tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Unidades disponibles</th>
+          <th>Precio Unitario</th>
+          </tr>
+        </thead>
+      </xpath>
+      <xpath expr="//tbody" position="replace">
+        <tbody>
+          <tr t-foreach="products" t-as="line">
+              <t t-set="internal_reference" t-value="line['code'] and '[%s] ' % line['code'] or ''"/>
+              <td><t t-esc="internal_reference"/><t t-esc="line['product_name']"/></td>
+              <td>
+                  <t t-esc="line['quantity']"/>
+                  <t t-if="line[&quot;uom&quot;] != &quot;Unit(s)&quot;">
+                      <t t-esc="line[&quot;uom&quot;]"/> 
+                  </t>
+              </td>
+              <td><t t-esc="line['qty_available']"/></td>
+              <td>
+                  <t t-esc="line[&quot;price_unit&quot;]"/>
+              <t t-if="line[&quot;discount&quot;] != 0">
+                  Desc: <t t-esc="line[&quot;discount&quot;]"/>%
+              </t>
+              </td>
+          </tr>
+          </tbody>
+      </xpath>
+    </template>
+  </data>
+</openerp>

@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+      <record model="ir.ui.view" id="pt_purchase_order_form_view_inherit">
+        <field name="name">pt_purchase_order_form_view_inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+          <field name="price_unit" position="after">
+              <field name="product_profit_value"/>
+              <field name="product_profit_percentage"/>
+          </field>
+        </field>
+      </record>
+    </data>
+  </odoo>

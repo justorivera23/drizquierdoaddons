@@ -1,0 +1,16 @@
+.validation_msg{
+    color: #b80b0b;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 30px;
+}
+.main_product_not_found{
+    color: #b80b0b;
+}
+.confirm_conversion .body{
+    margin: 0px !important;
+}
+
+.disable_btn {
+    background: #ccc !important;
+}

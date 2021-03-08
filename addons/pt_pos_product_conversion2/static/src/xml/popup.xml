@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ConfirmConversionPopupWidget">
+		<div class="modal-dialog">
+			<div class="popup popup-textinput confirm_conversion" style="height: 330px;width: 700px;">
+				<div class="title">
+					Conversión de productos
+                </div>
+                <div class="body">
+                    <h4>
+                        <strong id="conversion_tittle">Indique la cantidad de unidades requeridas</strong>
+                    </h4>
+                    <div style="text-align: center;">
+                        <input type="number" id="total_units" placeholder="Unidades" min="1" />
+                        <div class="validation_msg" id="validation_message"></div>
+                    </div>
+                </div>
+				<div class="footer">
+					<div class="button confirm" id="btn_conversion_confirm">
+                        Confirmar
+                    </div>
+					<div class="button cancel">
+                        Cerrar
+                    </div>
+				</div>
+			</div>
+		</div>
+	</t>
+</templates>

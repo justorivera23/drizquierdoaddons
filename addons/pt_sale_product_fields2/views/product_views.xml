@@ -1,0 +1,29 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="pt_sale_product_fields_form_view_inherit">
+      <field name="name">pt_sale_product_fields_form_view_inherit</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_only_form_view" />
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+          <field name="product_variant_id" position="after">
+              <field name="product_profit_value"/>
+              <field name="product_profit_percentage"/>
+          </field>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="pt_sale_product_fields_line_form_view_inherit">
+      <field name="name">pt_sale_product_fields_line_form_view_inherit</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view" />
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+          <field name="uom_po_id" position="after">
+              <field name="product_profit_value"/>
+              <field name="product_profit_percentage"/>
+          </field>
+      </field>
+    </record>
+
+  </data>
+</odoo>
