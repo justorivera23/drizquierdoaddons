@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="pos_config_view_form_inherit_pos_salesperson" model="ir.ui.view">
+        <field name="name">pos.config.form.inherit.pos.salesperson</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//h2[@name='order']" position="before">
+                <h2 name="order">Allowed Salespersons</h2>
+                <div class="row mt16 o_settings_container">
+                    <div id="pos_salespersons" class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <div class="text-muted">
+                                Select Salespersons for Point of Sales.
+                            </div>
+                            <div class="content-group mt16">
+                                <field name="pos_salesperson_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<odoo>
+	<record id="view_pos_details_wizard_inherit_ip" model="ir.ui.view">
+		<field name="name">pos.details.wizard.form.inherit.ip</field>
+		<field name="model">pos.details.wizard</field>
+		<field name="inherit_id" ref="point_of_sale.view_pos_details_wizard"/>
+		<field name="arch" type="xml">
+            <xpath expr="//form/group" position="after">
+            	<group>
+            		<group>
+						<field name="salesperson"/>
+					</group>
+					<group>
+						<field name="pos_salesperson_id" widget="many2many_tags" attrs="{'invisible': [('salesperson', '=', False)]}" options="{'no_create': True}"/>
+					</group>
+				</group>
+            </xpath>
+		</field>
+	</record>
+</odoo>

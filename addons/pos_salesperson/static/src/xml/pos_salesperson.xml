@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="SalespersonWidget">
+        <span class="control-button pos_seller">
+            <i class="fa fa-users color-green"></i>
+            <span ><t t-esc="widget.salesperson()"/></span>
+        </span>
+    </t>
+
+    <t t-extend="PosTicket">
+        <t t-jquery=".receipt-user" t-operation="replace">
+        	Cashier: <t t-esc="widget.pos.get_cashier().name"/><br/>
+            Salesperson: <t t-esc="order.get_pos_salesperson_name()"/><br />
+        </t>
+    </t>
+
+    <t t-extend="XmlReceipt">
+        <t t-jquery="t[t-if='receipt.cashier']" t-operation="replace">
+            <t t-if='receipt.cashier'>
+                <div class='cashier'>
+                    <div>--------------------------------</div>
+                    <div>Cashier: <t t-esc='receipt.cashier' /></div>
+                    <div>Salesperson: <t t-esc='order.get_pos_salesperson_name()' /></div>
+                </div>
+            </t>
+        </t>
+    </t>
+</templates>

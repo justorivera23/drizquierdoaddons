@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_pos_order_report_pivot" model="ir.ui.view">
+        <field name="name">pos.report.order.pivot</field>
+        <field name="model">report.pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_report_pos_order_pivot"/>
+        <field name="arch" type="xml">
+            <xpath expr="//pivot" position="inside">
+                <field name="pos_salesperson_id" type="col"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_order_report_graph" model="ir.ui.view">
+        <field name="name">pos.report.order.graph</field>
+        <field name="model">report.pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_report_pos_order_graph"/>
+        <field name="arch" type="xml">
+            <xpath expr="//graph" position="inside">
+                <field name="pos_salesperson_id" type="col"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_order_report_search" model="ir.ui.view">
+        <field name="name">pos.report.order.search</field>
+        <field name="model">report.pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_report_pos_order_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="pos_salesperson_id"/>
+            </xpath>
+            <xpath expr="//group/filter[@name='User']" position="attributes">
+                <attribute name="string">Cashier</attribute>
+            </xpath>
+            <xpath expr="//group/filter[@name='User']" position="after">
+                <filter string="Salesperson" name="pos_salesperson_id" context="{'group_by':'pos_salesperson_id'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

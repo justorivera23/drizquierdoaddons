@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<odoo>
+    <template id="report_pos_sales_view" inherit_id="point_of_sale.report_saledetails">
+        <xpath expr="//div[hasclass('page')]/table" position="after">
+            <div t-if="salesperson and categ_qty_dict">
+                <br/>
+                <h3>Salesperson</h3>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Price Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="categ_qty_dict" t-as="dict_info">
+                            <tr>
+                                <td t-esc="dict_info"/>
+                                <t t-foreach="dict_info_value" t-as="val">
+                                    <td t-esc="round(val, 2)"/>
+                                </t>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,11 @@
+.pos_seller {
+    background: #393939 !important;
+    color: white;
+}
+.pos .pos_seller:hover {
+    background: #efefef !important;
+    color: black !important;
+}
+.pos_seller i{
+	color: rgb(94, 185, 55);
+}
