@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="internal_layout_lax_check">
+        <!-- Multicompany -->
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id" />
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company" />
+        </t>
+        <div class="header"></div>
+        <div class="article">
+            <t t-raw="0" />
+        </div>
+
+        <div class="footer"></div>
+    </template>
+
+    <template id="report_paycheck_bank_1">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <t t-call="paycheck_print.internal_layout_lax_check">
+                        <div style="font-size:13px">
+                            <div class="row">
+                                <br />
+                                <br />
+                                <br />
+                                <table width="100%">
+                                    <tr height="10px">
+
+                                        <td width="60%" height="10px">
+                                            <p style="font-family: Arvo; letter-spacing: 0.2em;">
+                                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                  &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Guatemala, &#160;
+                                                <span t-field="o.payment_date" t-options="{'format': 'dd'}" />
+                                                &#160;de &#160;
+                                                <span t-field="o.payment_date" t-options="{&quot;format&quot;: &quot;MMMM&quot;}" />
+                                                de
+                                                <span t-field="o.payment_date" t-options="{&quot;format&quot;: &quot;yyyy&quot;}" />
+                                            </p>
+                                        </td>
+                                        <td width="19%" height="10px" style="font-family: Arvo; letter-spacing: 0.2em;">
+                                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                            <strong>
+                                                <span t-esc="'{:,.2f}'.format(o.amount)" />
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td width="80%" colspan="2" height="25px" style="font-family: Arvo; letter-spacing: 0.2em;">
+                                            <div style="text-aling:left; margin-left:160px; width:650px !important">
+                                                <strong>
+                                                    <span t-field="o.partner_id.name" />
+                                                </strong>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td width="80%" colspan="2" height="30px" class="text-left" style="font-family: Arvo; letter-spacing: 0.2em;">
+                                            <div style="text-aling:left; margin-left:120px; width:700px !important">
+                                                **
+                                                <span t-esc="num_a_letras(o.amount)"/>
+                                                &#160;**
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <br />
+                                    <br />
+                                    <tr>
+                                        <td colspan="2" class="text-left" height="50px" style="font-family: Arvo; letter-spacing: 0.2em;">
+                                            <div style="margin-top:35px; margin-left:210px;">
+                                                <t t-if="o.no_negociable">
+                                                    NO NEGOCIABLE
+                                                </t>
+                                            </div>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <br />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <style type="text/css">
+                            <![CDATA[
+/* Arvo */
+@font-face {
+  font-family: 'Arvo';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arvo'), url(http://fonts.gstatic.com/s/arvo/v8/MViwy4K6e56oHcyeMzjbCQ.ttf) format('truetype');
+}
+]]>
+                        </style>
+
+                        <style type="text/css">
+
+muestra2 > tbody > tr > td{
+  border-left: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+
+</style>
+                        <table class="table table-sm">
+                            <thead >
+                                <tr style="font-size:12px">
+                                    <th colspan="2" class="text-left">
+                                        <span t-field="o.communication" />
+                                    </th>
+                                    <th colspan="2" class="text-right">
+                                        No. <span t-field="o.check_number" t-field-options="{'widget':'False'}" />
+                                    </th>
+                                </tr>
+                                <tr style="font-size:12px">
+                                    <th>CODIGO CUENTA</th>
+                                    <th>NOMBRE CUENTA</th>
+                                    <th class="text-right">DEBE</th>
+                                    <th class="text-right">HABER</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="d_total" t-value="0" />
+                                <t t-set="c_total" t-value="0" />
+                                <t t-foreach="o.move_line_ids" t-as="line">
+
+
+                                    <tr style="font-size:10px">
+                                        <th>
+                                            <span t-esc="line.account_id.code" />
+                                        </th>
+                                        <th>
+                                            <span t-esc="line.account_id.name" />
+                                        </th>
+                                        <th class="text-right">
+                                            <span t-esc="'{:,.2f}'.format(line.debit)" />
+                                            <t t-set="d_total" t-value="d_total+line.debit" />
+                                        </th>
+                                        <th class="text-right">
+                                            <span t-esc="'{:,.2f}'.format(line.credit)" />
+                                            <t t-set="c_total" t-value="c_total+line.credit" />
+                                        </th>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+
+                        <div class="footer">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr style="font-size:12px">
+                                        <th></th>
+                                        <th></th>
+                                        <th class="text-right">
+                                            <span t-esc="'{:,.2f}'.format(o.amount)" />
+                                        </th>
+                                        <th class="text-right">
+                                            <span t-esc="'{:,.2f}'.format(o.amount)" />
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>TRASLADOS</td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            HECHO POR:
+                                            <br />
+                                        </th>
+                                        <th>
+                                            REVISADO POR:
+                                            <br />
+                                        </th>
+                                        <th>
+                                            AUTORIZADO POR :
+                                            <br />
+                                            GT
+                                        </th>
+                                        <th>RECIBI CONFORME</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

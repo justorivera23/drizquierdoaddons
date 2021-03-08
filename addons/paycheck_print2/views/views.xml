@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="paycheck_print.list">
+      <field name="name">paycheck_print list</field>
+      <field name="model">paycheck_print.paycheck_print</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="paycheck_print.action_window">
+      <field name="name">paycheck_print window</field>
+      <field name="res_model">paycheck_print.paycheck_print</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="paycheck_print.action_server">
+      <field name="name">paycheck_print server</field>
+      <field name="model_id" ref="model_paycheck_print_paycheck_print"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="paycheck_print" id="paycheck_print.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="paycheck_print.menu_1" parent="paycheck_print.menu_root"/>
+    <menuitem name="Menu 2" id="paycheck_print.menu_2" parent="paycheck_print.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="paycheck_print.menu_1_list" parent="paycheck_print.menu_1"
+              action="paycheck_print.action_window"/>
+    <menuitem name="Server to list" id="paycheck_print" parent="paycheck_print.menu_2"
+              action="paycheck_print.action_server"/>
+    -->
+  </data>
+</odoo>

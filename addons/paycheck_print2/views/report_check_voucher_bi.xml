@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="internal_layout_lax_check">
+        <!-- Multicompany -->
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id" />
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company" />
+        </t>
+        <div class="header"></div>
+        <div class="article">
+            <t t-raw="0" />
+        </div>
+
+        <div class="footer"></div>
+    </template>
+
+
+    <template id="report_voucher_check_bi">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="amount_letters" t-value="num_a_letras(o.amount)" />
+                <div class="page">
+                    <t t-call="paycheck_print.internal_layout_lax_check">
+                        <!-- check design -->
+                        <div class="row">
+                            <table width="100%">
+                                <tr height="20px">
+
+                                    <td width="60%" height="30px">
+                                        <p style="font-family: Arvo; letter-spacing: 0.2em;">
+                                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Guatemala, &#160;
+                                            <span t-field="o.payment_date" t-options="{'format': 'dd'}" />
+                                            &#160;de &#160;
+                                            <span t-field="o.payment_date" t-options="{&quot;format&quot;: &quot;MMMM&quot;}" />
+                                            de
+                                            <span t-field="o.payment_date" t-options="{&quot;format&quot;: &quot;yyyy&quot;}" />
+                                        </p>
+                                    </td>
+                                    <td width="16%" height="5px" style="font-family: Arvo; letter-spacing: 0.2em;">
+                                        <span t-esc="'{:,.2f}'.format(o.amount)" />
+                                    </td>
+                                </tr>
+                                <tr>
+
+                                    <td width="80%" colspan="2" height="30px" style="font-family: Arvo; letter-spacing: 0.2em;">
+                                        <div style="text-aling:left; margin-left:125px; margin-top:-5px;">
+                                            <span t-field="o.partner_id.name" />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+
+                                    <td width="80%" colspan="2" height="30px" class="text-left" style="font-family: Arvo; letter-spacing: 0.2em;">
+                                        <div style="text-aling:left; margin-left:80px;">
+                                            <span t-esc="num_a_letras(o.amount)" />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="text-left" height="50px" style="font-family: Arvo; letter-spacing: 0.2em;">
+                                        <div style="margin-top:35px; margin-left:210px;">
+                                            <t t-if="o.no_negociable">
+                                                NO NEGOCIABLE
+                                            </t>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                        <br />
+                        <table width="98%" style="margin-top:95px;">
+                            <thead>
+                                <tr style="font-size:12px">
+                                    <th colspan="2" class="text-left">
+                                        <span t-field="o.communication" />
+                                    </th>
+                                    <th colspan="2" class="text-right">
+                                        No. <span t-field="o.check_number" t-field-options="{'widget':'False'}" />
+                                    </th>
+                                </tr>
+                                <tr style="heigth:35px;">
+                                    <th width="48%" colspan="2" class="text-left">
+                                        <div style="margin-top:10px">
+                                            &#160;&#160;&#160;&#160;&#160;&#160;
+                                            <span t-field="o.communication" />
+                                        </div>
+                                    </th>
+                                    <th width="50%" colspan="2" class="text-right">
+                                        <!--<span t-field="o.check_number" t-field-options="{'widget':'False'}" />-->
+                                        &#160;&#160;&#160;&#160;&#160;&#160;
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <t t-set="d_total" t-value="0" />
+                                <t t-set="c_total" t-value="0" />
+                                <t t-foreach="o.move_line_ids" t-as="line" style="page-break-inside: avoid; margin-top:25px;">
+
+                                    <tr>
+                                        <td width="20%" class="text-left">
+                                            <div style="text-align:left; margin-left:-17px;">
+                                                <span t-esc="line.account_id.code" />
+                                            </div>
+                                        </td>
+                                        <td width="38%" class="text-center; font-size:10px;">
+                                            <span t-esc="line.account_id.name" />
+                                        </td>
+                                        <td width="23%" class="text-right">
+                                            <div style="margin-right:-10px;">
+                                                <span t-esc="'{:,.2f}'.format(line.debit)" />
+                                                <t t-set="d_total" t-value="d_total+line.debit" />
+                                            </div>
+                                        </td>
+                                        <td width="22%" class="text-right">
+                                            <span t-esc="'{:,.2f}'.format(line.credit)" />
+                                            <t t-set="c_total" t-value="c_total+line.credit" />
+                                            &#160;&#160;
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div class="footer">
+                            <table width="98%">
+                                <tr>
+                                    <td width="82%" class="text-right" colspan="2">
+                                        <span t-esc="'{:,.2f}'.format(o.amount)" />
+                                    </td>
+                                    <td width="16%" class="text-right" colspan="2">
+                                        <span t-esc="'{:,.2f}'.format(o.amount)" />
+                                        &#160;
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                        <style type="text/css">
+                            <![CDATA[
+/* Arvo */
+@font-face {
+  font-family: 'Arvo';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arvo'), url(http://fonts.gstatic.com/s/arvo/v8/MViwy4K6e56oHcyeMzjbCQ.ttf) format('truetype');
+}
+]]>
+                        </style>
+
+                        <!--            
+ 
+<style type="text/css">
+
+.muestra > tbody > tr > td{
+  border-left: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+muestra2 > tbody > tr > td{
+  border-left: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#customers td, #customers th {
+    border: 1px solid;
+    padding: 8px;
+}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    color: black;
+}
+</style>   -->
+
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

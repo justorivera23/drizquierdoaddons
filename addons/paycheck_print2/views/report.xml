@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="payment_print_paycheck_bank_1"
+            string="Chequera Bancos"
+            model="account.payment"
+            report_type="qweb-pdf"
+            file="paycheck_print.report_paycheck_bank_1"
+            name="paycheck_print.report_paycheck_bank_1"
+            paperformat="paycheck_print.paperformat_paycheck_print_1"
+        />
+
+        <report
+            id="payment_print_check_voucher_bi"
+            string="Cheque Voucher"
+            model="account.payment"
+            report_type="qweb-pdf"
+            name="paycheck_print.report_voucher_check_bi"
+            file="paycheck_print.report_voucher_check_bi"
+            paperformat="paycheck_print.paperformat_check_voucher_bi"
+        />
+    </data>
+</odoo>
