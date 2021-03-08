@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="pt_multicert_felgt.pt_multicert_felgt_account_journal_form_view_inherit">
+        <field name="name">pt_multicert_felgt.pt_multicert_felgt_account_journal_form_view_inherit</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form" />
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="code" position="before">
+                <field name="fel_certifier" invisible="1" />
+                <field name="is_fel" attrs="{'invisible': [('fel_certifier', '!=', 'digifact')]}" />
+                <field name="infile_fel_active" attrs="{'invisible': [('fel_certifier', '!=', 'infile')]}" />
+                <field name="digifact_establishment_code"/>
+            </field>
+        </field>
+    </record>
+</odoo>
